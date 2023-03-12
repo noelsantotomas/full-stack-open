@@ -29,8 +29,12 @@ const App = () => {
     console.log(newPoints);
   };
 
+  const highestPointsIndex = points.indexOf(Math.max(...points));
+  console.log(highestPointsIndex);
+
   return (
     <div>
+      <h1>Selected anecdote:</h1>
       {anecdotes[selected]} <br />
       {/* We have to use `selected` in `handlePoints`, because it represents 
       the current value of selected. `randomNumber`  is only updated when 
@@ -38,6 +42,9 @@ const App = () => {
       <p>This anecdote has {points[selected]} votes.</p>
       <button onClick={() => handlePoints(selected)}>Add vote</button>
       <button onClick={shuffleAnecdote}>Shuffle anecdote</button>
+      <h1>Anecdote with the most votes:</h1>
+      <p>{anecdotes[highestPointsIndex]}</p>
+      <p>This anecdote has {points[highestPointsIndex]} votes.</p>
     </div>
   );
 };
