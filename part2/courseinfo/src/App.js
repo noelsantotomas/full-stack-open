@@ -3,6 +3,13 @@ const Course = ({ course }) => {
   return (
     <>
       <h1>{course.name}</h1>
+      <ul>
+        {parts.map((part) => (
+          <li key={part.id}>
+            {part.name} {part.exercises}
+          </li>
+        ))}
+      </ul>
     </>
   );
 };
@@ -26,6 +33,11 @@ const App = () => {
         name: "State of a component",
         exercises: 14,
         id: 3,
+      },
+      {
+        name: "Redux",
+        exercises: 11,
+        id: 4,
       },
     ],
   };
