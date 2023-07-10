@@ -1,3 +1,6 @@
+import axios from "axios";
+const baseUrl = "http://localhost:3001/persons";
+
 const PersonForm = ({
   persons,
   setPersons,
@@ -19,7 +22,6 @@ const PersonForm = ({
   const addNewEntry = (event) => {
     event.preventDefault();
     const entryObject = {
-      id: persons.length + 1,
       name: newName,
       number: newNumber,
     };
@@ -28,9 +30,11 @@ const PersonForm = ({
     } else if (numberExists) {
       alert(`${newNumber} is already in the phonebook.`);
     } else {
-      setPersons(persons.concat(entryObject));
-      setNewName("");
-      setNewNumber("");
+      axios.post(baseUrl, entryObject).then((response) => {
+        setPersons(persons.concat(response.data));
+        setNewName("");
+        setNewNumber("");
+      });
     }
   };
 
