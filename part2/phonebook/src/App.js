@@ -10,12 +10,28 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [newFilter, setNewFilter] = useState("");
+  const [message, setNewMessage] = useState("test");
 
   useEffect(() => {
     getAll().then((initialPersons) => {
       setPersons(initialPersons);
     });
   }, []);
+
+  const Notification = ({ message }) => {
+    if (message === null) {
+      return null;
+    }
+
+    return <div className="notification">{message}</div>;
+  };
+
+  const handleNotificationChange = (message) => {
+    setNewMessage(message);
+    setTimeout(() => {
+      setNewMessage(null);
+    }, 5000);
+  };
 
   const handleNewFilter = (event) => {
     setNewFilter(event.target.value);
@@ -69,6 +85,7 @@ const App = () => {
         setNewName("");
         setNewNumber("");
       });
+      handleNotificationChange(`Successfully added ${newName}`);
     }
   };
 
@@ -84,6 +101,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={message} />
       <h2>Phonebook</h2>
       <PersonForm
         persons={persons}
