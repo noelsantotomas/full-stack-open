@@ -9,14 +9,8 @@ const create = (entryObject) => {
   return axios.post(baseUrl, entryObject).then((response) => response.data);
 };
 
-const deleteEntry = (id, setPersons) => {
-  return axios
-    .delete(`${baseUrl}/${id}`)
-    .then(
-      setPersons((currentPersons) =>
-        currentPersons.filter((person) => person.id !== id)
-      )
-    );
+const deleteEntry = (id) => {
+  return axios.delete(`${baseUrl}/${id}`);
 };
 
 export { getAll, create, deleteEntry };

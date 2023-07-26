@@ -2,7 +2,11 @@ import { deleteEntry } from "./services/FormService";
 
 const handleDelete = (id, name, setPersons) => {
   if (window.confirm(`Do you really want to delete ${name}?`)) {
-    deleteEntry(id, setPersons);
+    deleteEntry(id, setPersons).then(
+      setPersons((currentPersons) =>
+        currentPersons.filter((person) => person.id !== id)
+      )
+    );
   }
 };
 
