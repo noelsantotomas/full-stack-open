@@ -3,7 +3,7 @@ import DisplayNumbers from "./components/DisplayNumbers";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import { getAll } from "./components/services/FormService";
-import { create, deleteEntry } from "./components/services/FormService";
+import { create, deleteEntry, update } from "./components/services/FormService";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -16,6 +16,10 @@ const App = () => {
       setPersons(initialPersons);
     });
   }, []);
+
+  const handleNewFilter = (event) => {
+    setNewFilter(event.target.value);
+  };
 
   const filteredPersons = persons.filter((person) =>
     person.name.toLowerCase().includes(newFilter.toLowerCase())
@@ -31,6 +35,18 @@ const App = () => {
     setNewNumber(event.target.value);
   };
 
+  const handleUpdate = (newNumber) => {
+    const currentPerson = persons.find((person) => person.name === newName);
+    const updatedPerson = { ...currentPerson, number: newNumber };
+    console.log(currentPerson);
+    update(currentPerson.id, updatedPerson).then((returnedPerson) => {
+      const updatedPersons = persons.map((person) =>
+        person.id !== currentPerson.id ? person : returnedPerson
+      );
+      setPersons(updatedPersons);
+    });
+  };
+
   const addNewEntry = (event) => {
     event.preventDefault();
     const entryObject = {
@@ -43,6 +59,7 @@ const App = () => {
           `${newName} is already in the phonebook. Do you want to update the phone number?`
         )
       ) {
+        handleUpdate(newNumber);
       }
     } else if (numberExists) {
       alert(`${newNumber} is already in the phonebook.`);
@@ -80,7 +97,7 @@ const App = () => {
         handleNewNumber={handleNewNumber}
       />
       <h2>Numbers</h2>
-      <Filter newFilter={newFilter} setNewFilter={setNewFilter} />
+      <Filter newFilter={newFilter} handleNewFilter={handleNewFilter} />
       <DisplayNumbers
         persons={persons}
         filteredPersons={filteredPersons}

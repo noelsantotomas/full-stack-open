@@ -1,7 +1,4 @@
-const Filter = ({ newFilter, setNewFilter }) => {
-  const handleNewFilter = (event) => {
-    setNewFilter(event.target.value);
-  };
+const Filter = ({ newFilter, handleNewFilter }) => {
   return (
     <p>
       Filter: <input value={newFilter} onChange={handleNewFilter} />
