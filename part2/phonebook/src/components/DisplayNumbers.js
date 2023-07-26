@@ -1,23 +1,9 @@
-import { deleteEntry } from "./services/FormService";
-
-const handleDelete = (id, name, setPersons) => {
-  if (window.confirm(`Do you really want to delete ${name}?`)) {
-    deleteEntry(id, setPersons).then(
-      setPersons((currentPersons) =>
-        currentPersons.filter((person) => person.id !== id)
-      )
-    );
-  }
-};
-
-const DisplayNumbers = ({ persons, filteredPersons, setPersons }) => {
+const DisplayNumbers = ({ persons, filteredPersons, handleDelete }) => {
   if (filteredPersons.length > 0) {
     return filteredPersons.map((person) => (
       <div key={person.id}>
         {person.name} {person.number}{" "}
-        <button
-          onClick={() => handleDelete(person.id, person.name, setPersons)}
-        >
+        <button onClick={() => handleDelete(person.id, person.name)}>
           Delete
         </button>
       </div>
@@ -26,9 +12,7 @@ const DisplayNumbers = ({ persons, filteredPersons, setPersons }) => {
     return persons.map((person) => (
       <div key={person.id}>
         {person.name} {person.number}{" "}
-        <button
-          onClick={() => handleDelete(person.id, person.name, setPersons)}
-        >
+        <button onClick={() => handleDelete(person.id, person.name)}>
           Delete
         </button>
       </div>

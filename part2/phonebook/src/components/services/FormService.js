@@ -13,4 +13,11 @@ const deleteEntry = (id) => {
   return axios.delete(`${baseUrl}/${id}`);
 };
 
-export { getAll, create, deleteEntry };
+const update = (id, setPersons, person, newNumber) => {
+  const changedNumber = { ...person, number: newNumber };
+  return axios
+    .put(`${baseUrl}/${id}`, changedNumber)
+    .then((returnedNumber) => setPersons());
+};
+
+export { getAll, create, deleteEntry, update };
