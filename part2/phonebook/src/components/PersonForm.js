@@ -1,6 +1,4 @@
-import axios from "axios";
-import FormService from "./services/FormService";
-const baseUrl = "http://localhost:3001/persons";
+import { create } from "./services/FormService";
 
 const PersonForm = ({
   persons,
@@ -31,7 +29,7 @@ const PersonForm = ({
     } else if (numberExists) {
       alert(`${newNumber} is already in the phonebook.`);
     } else {
-      FormService.create(entryObject).then((data) => {
+      create(entryObject).then((data) => {
         setPersons(persons.concat(data));
         setNewName("");
         setNewNumber("");

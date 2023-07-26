@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import DisplayNumbers from "./components/DisplayNumbers";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
-import FormService from "./components/services/FormService";
+import { getAll } from "./components/services/FormService";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -11,7 +11,7 @@ const App = () => {
   const [newFilter, setNewFilter] = useState("");
 
   useEffect(() => {
-    FormService.getAll().then((initialPersons) => {
+    getAll().then((initialPersons) => {
       setPersons(initialPersons);
     });
   }, []);
@@ -33,7 +33,11 @@ const App = () => {
       />
       <h2>Numbers</h2>
       <Filter newFilter={newFilter} setNewFilter={setNewFilter} />
-      <DisplayNumbers persons={persons} filteredPersons={filteredPersons} />
+      <DisplayNumbers
+        persons={persons}
+        filteredPersons={filteredPersons}
+        setPersons={setPersons}
+      />
     </div>
   );
 };
