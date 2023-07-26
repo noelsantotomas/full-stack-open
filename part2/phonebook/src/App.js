@@ -91,11 +91,15 @@ const App = () => {
 
   const handleDelete = (id, name) => {
     if (window.confirm(`Do you really want to delete ${name}?`)) {
-      deleteEntry(id, setPersons).then(
-        setPersons((currentPersons) =>
-          currentPersons.filter((person) => person.id !== id)
+      deleteEntry(id, setPersons)
+        .then(
+          setPersons((currentPersons) =>
+            currentPersons.filter((person) => person.id !== id)
+          )
         )
-      );
+        .catch((error) => {
+          handleNotificationChange(`${name} was already removed from server`);
+        });
     }
   };
 
