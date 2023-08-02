@@ -1,16 +1,22 @@
 import { useState, useEffect } from "react";
-import DisplayCountries from "./DisplayCountries";
+import DisplayCountries from "./components/DisplayCountries";
 import { getCountries } from "./services/countryService";
 
 const App = () => {
   const [query, setQuery] = useState("");
   const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
   useEffect(() => {
     getCountries().then((response) => {
       setCountries(response.data);
+      console.log(response.data);
     });
   }, []);
+
+  useEffect(() => {
+    setSelectedCountry(null);
+  }, [query]);
 
   const handleQuery = (e) => {
     setQuery(e.target.value);
@@ -25,7 +31,12 @@ const App = () => {
     <>
       <span>Find countries:</span>{" "}
       <input value={query} onChange={handleQuery} />
-      <DisplayCountries countriesToShow={query ? countriesToShow : []} />
+      <DisplayCountries
+        countriesToShow={query ? countriesToShow : []}
+        setCountries={setCountries}
+        selectedCountry={selectedCountry}
+        setSelectedCountry={setSelectedCountry}
+      />
     </>
   );
 };
